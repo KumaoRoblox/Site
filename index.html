@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Cool Site</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- GSAP for animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    /* Custom styles */
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      text-align: center;
+      padding: 2rem;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 70%);
+      animation: rotateBg 60s linear infinite;
+      will-change: transform;
+    }
+    @keyframes rotateBg {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .glow-btn {
+      position: relative;
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 9999px;
+      font-weight: 600;
+      overflow: hidden;
+      will-change: transform;
+      cursor: pointer;
+    }
+    .glow-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: linear-gradient(45deg, #ff6ec4, #7873f5, #42e695);
+      opacity: 0.7;
+      filter: blur(20px);
+      transition: opacity 0.3s;
+      transform: scale(0);
+      will-change: opacity, transform;
+    }
+    .glow-btn:hover::before {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .glow-btn span {
+      position: relative;
+      z-index: 10;
+    }
+    .feature-card, .step-card {
+      will-change: transform, opacity;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="relative z-20">
+      <h1 class="text-5xl md:text-7xl font-extrabold mb-4">めちゃくちゃかっこいいサイトへようこそ</h1>
+      <p class="text-lg md:text-2xl mb-8">最先端のデザインとスムースなアニメーションを体験しよう</p>
+      <button id="startBtn" class="glow-btn"><span>今すぐ始める</span></button>
+    </div>
+  </section>
+
+  <!-- Getting Started Section -->
+  <section id="getting-started" class="py-20 px-4 md:px-16 bg-white/10 backdrop-blur-lg">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-4xl font-extrabold mb-6">はじめに</h2>
+      <p class="mb-12 text-lg">たった3ステップであなたもすぐに始められます。</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="step-card p-6 bg-white/20 rounded-2xl transform transition hover:scale-105">
+          <div class="text-6xl mb-4">①</div>
+          <h3 class="text-2xl font-bold mb-2">サインアップ</h3>
+          <p>アカウントを無料で登録。すぐにアクセス可能。</p>
+        </div>
+        <!-- Step 2 -->
+        <div class="step-card p-6 bg-white/20 rounded-2xl transform transition hover:scale-105">
+          <div class="text-6xl mb-4">②</div>
+          <h3 class="text-2xl font-bold mb-2">カスタマイズ</h3>
+          <p>ダッシュボードからお好みに合わせて設定。</p>
+        </div>
+        <!-- Step 3 -->
+        <div class="step-card p-6 bg-white/20 rounded-2xl transform transition hover:scale-105">
+          <div class="text-6xl mb-4">③</div>
+          <h3 class="text-2xl font-bold mb-2">スタート</h3>
+          <p>すべての機能を使ってプロジェクトを開始。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 px-4 md:px-16">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="feature-card p-6 bg-white/10 rounded-2xl backdrop-blur-lg transform transition hover:scale-105">
+        <h3 class="text-2xl font-bold mb-2">高速パフォーマンス</h3>
+        <p>GSAPとTailwindを組み合わせた滑らかなアニメーション。</p>
+      </div>
+      <div class="feature-card p-6 bg-white/10 rounded-2xl backdrop-blur-lg transform transition hover:scale-105">
+        <h3 class="text-2xl font-bold mb-2">レスポンシブデザイン</h3>
+        <p>どんなデバイスでも最適表示。</p>
+      </div>
+      <div class="feature-card p-6 bg-white/10 rounded-2xl backdrop-blur-lg transform transition hover:scale-105">
+        <h3 class="text-2xl font-bold mb-2">シームレス統合</h3>
+        <p>外部APIやCMSとも簡単連携。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-8 text-center text-sm text-white/70">
+    &copy; 2025 Super Cool Site. All rights reserved.
+  </footer>
+
+  <script>
+    // GSAP animation for hero text
+    gsap.from(".hero h1", { y: -50, opacity: 0, duration: 1, ease: "power3.out" });
+    gsap.from(".hero p", { y: 50, opacity: 0, duration: 1, delay: 0.3, ease: "power3.out" });
+    gsap.from(".glow-btn", { scale: 0, opacity: 0, duration: 1, delay: 0.6, ease: "back.out(1.7)" });
+
+    // スムーススクロール：今すぐ始める → はじめにセクション
+    document.getElementById('startBtn').addEventListener('click', () => {
+      document.getElementById('getting-started').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // GSAP animation for step cards
+    gsap.from(".step-card", {
+      y: 30,
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.out",
+      stagger: 0.2,
+      scrollTrigger: {
+        trigger: "#getting-started",
+        start: "top 80%"
+      }
+    });
+  </script>
+  <!-- ScrollTrigger プラグインを使うなら次のスクリプトも追加 -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+  </script> -->
+</body>
+</html>
