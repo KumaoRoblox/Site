@@ -1,168 +1,462 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Super Cool Site</title>
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- GSAP for animations -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <style>
-    /* Custom styles */
-    body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
-    }
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      text-align: center;
-      padding: 2rem;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent 70%);
-      animation: rotateBg 60s linear infinite;
-      will-change: transform;
-    }
-    @keyframes rotateBg {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-    .glow-btn {
-      position: relative;
-      padding: 0.75rem 1.5rem;
-      background: transparent;
-      border: 2px solid #fff;
-      border-radius: 9999px;
-      font-weight: 600;
-      overflow: hidden;
-      will-change: transform;
-      cursor: pointer;
-    }
-    .glow-btn::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: linear-gradient(45deg, #ff6ec4, #7873f5, #42e695);
-      opacity: 0.7;
-      filter: blur(20px);
-      transition: opacity 0.3s;
-      transform: scale(0);
-      will-change: opacity, transform;
-    }
-    .glow-btn:hover::before {
-      opacity: 1;
-      transform: scale(1);
-    }
-    .glow-btn span {
-      position: relative;
-      z-index: 10;
-    }
-    .feature-card, .step-card {
-      will-change: transform, opacity;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS - 未来へのゲートウェイ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.1" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00d4ff, #ff00f7, #00ff88);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from { filter: drop-shadow(0 0 5px rgba(0, 212, 255, 0.5)); }
+            to { filter: drop-shadow(0 0 20px rgba(255, 0, 247, 0.8)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #00d4ff, #ff00f7);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, #00d4ff, #ffffff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes textShimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #00d4ff, #ff00f7);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Floating elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .floating-element {
+            position: absolute;
+            background: linear-gradient(45deg, #00d4ff, #ff00f7);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.1;
+        }
+
+        .floating-element:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-element:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 60px;
+            background: linear-gradient(45deg, #00d4ff, #ff00f7);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 247, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .feature-card p {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .features {
+                padding: 50px 20px;
+            }
+            
+            .features h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="relative z-20">
-      <h1 class="text-5xl md:text-7xl font-extrabold mb-4">めちゃくちゃかっこいいサイトへようこそ</h1>
-      <p class="text-lg md:text-2xl mb-8">最先端のデザインとスムースなアニメーションを体験しよう</p>
-      <button id="startBtn" class="glow-btn"><span>今すぐ始める</span></button>
-    </div>
-  </section>
+    <div class="bg-animation"></div>
+    
+    <header>
+        <nav>
+            <div class="logo">NEXUS</div>
+            <ul class="nav-links">
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#about">について</a></li>
+                <li><a href="#services">サービス</a></li>
+                <li><a href="#contact">コンタクト</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <!-- Getting Started Section -->
-  <section id="getting-started" class="py-20 px-4 md:px-16 bg-white/10 backdrop-blur-lg">
-    <div class="max-w-4xl mx-auto text-center">
-      <h2 class="text-4xl font-extrabold mb-6">はじめに</h2>
-      <p class="mb-12 text-lg">たった3ステップであなたもすぐに始められます。</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Step 1 -->
-        <div class="step-card p-6 bg-white/20 rounded-2xl transform transition hover:scale-105">
-          <div class="text-6xl mb-4">①</div>
-          <h3 class="text-2xl font-bold mb-2">サインアップ</h3>
-          <p>アカウントを無料で登録。すぐにアクセス可能。</p>
-        </div>
-        <!-- Step 2 -->
-        <div class="step-card p-6 bg-white/20 rounded-2xl transform transition hover:scale-105">
-          <div class="text-6xl mb-4">②</div>
-          <h3 class="text-2xl font-bold mb-2">カスタマイズ</h3>
-          <p>ダッシュボードからお好みに合わせて設定。</p>
-        </div>
-        <!-- Step 3 -->
-        <div class="step-card p-6 bg-white/20 rounded-2xl transform transition hover:scale-105">
-          <div class="text-6xl mb-4">③</div>
-          <h3 class="text-2xl font-bold mb-2">スタート</h3>
-          <p>すべての機能を使ってプロジェクトを開始。</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <main class="container">
+        <section class="hero" id="home">
+            <div class="floating-elements">
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+                <div class="floating-element"></div>
+            </div>
+            
+            <div class="hero-content">
+                <h1>未来への扉</h1>
+                <p>革新的なテクノロジーと創造性が出会う場所。私たちと一緒に、新しい可能性を探求しませんか？デジタルの世界で、あなたの夢を現実に変えるお手伝いをします。</p>
+                <a href="#features" class="cta-button">体験を始める</a>
+            </div>
+        </section>
 
-  <!-- Features Section -->
-  <section id="features" class="py-20 px-4 md:px-16">
-    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="feature-card p-6 bg-white/10 rounded-2xl backdrop-blur-lg transform transition hover:scale-105">
-        <h3 class="text-2xl font-bold mb-2">高速パフォーマンス</h3>
-        <p>GSAPとTailwindを組み合わせた滑らかなアニメーション。</p>
-      </div>
-      <div class="feature-card p-6 bg-white/10 rounded-2xl backdrop-blur-lg transform transition hover:scale-105">
-        <h3 class="text-2xl font-bold mb-2">レスポンシブデザイン</h3>
-        <p>どんなデバイスでも最適表示。</p>
-      </div>
-      <div class="feature-card p-6 bg-white/10 rounded-2xl backdrop-blur-lg transform transition hover:scale-105">
-        <h3 class="text-2xl font-bold mb-2">シームレス統合</h3>
-        <p>外部APIやCMSとも簡単連携。</p>
-      </div>
-    </div>
-  </section>
+        <section class="features" id="features">
+            <h2>私たちの特徴</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🚀</span>
+                    <h3>革新的技術</h3>
+                    <p>最先端のテクノロジーを活用して、従来の限界を超えた解決策を提供します。AIと機械学習を駆使した次世代のサービスを体験してください。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">✨</span>
+                    <h3>創造的デザイン</h3>
+                    <p>美しさと機能性を兼ね備えたデザインで、ユーザー体験を向上させます。直感的で魅力的なインターフェースが、あなたの作業を楽しいものに変えます。</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🌟</span>
+                    <h3>無限の可能性</h3>
+                    <p>あなたのアイデアに制限はありません。私たちのプラットフォームで、想像を現実に変える力を手に入れてください。新しい世界への扉がここにあります。</p>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <!-- Footer -->
-  <footer class="py-8 text-center text-sm text-white/70">
-    &copy; 2025 Super Cool Site. All rights reserved.
-  </footer>
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-  <script>
-    // GSAP animation for hero text
-    gsap.from(".hero h1", { y: -50, opacity: 0, duration: 1, ease: "power3.out" });
-    gsap.from(".hero p", { y: 50, opacity: 0, duration: 1, delay: 0.3, ease: "power3.out" });
-    gsap.from(".glow-btn", { scale: 0, opacity: 0, duration: 1, delay: 0.6, ease: "back.out(1.7)" });
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.8)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.3)';
+            }
+        });
 
-    // スムーススクロール：今すぐ始める → はじめにセクション
-    document.getElementById('startBtn').addEventListener('click', () => {
-      document.getElementById('getting-started').scrollIntoView({ behavior: 'smooth' });
-    });
+        // Parallax effect for floating elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const elements = document.querySelectorAll('.floating-element');
+            elements.forEach((element, index) => {
+                const speed = 0.5 + (index * 0.1);
+                element.style.transform = `translateY(${scrolled * speed}px) rotate(${scrolled * 0.1}deg)`;
+            });
+        });
 
-    // GSAP animation for step cards
-    gsap.from(".step-card", {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: "#getting-started",
-        start: "top 80%"
-      }
-    });
-  </script>
-  <!-- ScrollTrigger プラグインを使うなら次のスクリプトも追加 -->
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-  <script>
-    gsap.registerPlugin(ScrollTrigger);
-  </script> -->
+        // Add entrance animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px)';
+            card.style.transition = `all 0.6s ease ${index * 0.2}s`;
+            observer.observe(card);
+        });
+    </script>
 </body>
 </html>
